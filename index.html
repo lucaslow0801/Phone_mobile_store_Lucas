@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucas Mobile | Smartphone Store</title>
+  <style>
+    :root {
+      --ink: #211436;
+      --muted: #76688f;
+      --line: #e4d9f7;
+      --paper: #fbf8ff;
+      --white: #ffffff;
+      --teal: #8b5cf6;
+      --teal-dark: #6d28d9;
+      --coral: #d946ef;
+      --amber: #c084fc;
+      --green: #a855f7;
+      --shadow: 0 18px 45px rgba(88, 28, 135, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(228, 217, 247, 0.9);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: linear-gradient(135deg, #7c3aed, #d946ef);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.26);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: #4c3b63;
+      font-size: 0.95rem;
+      font-weight: 650;
+    }
+
+    .nav-links a:hover {
+      color: var(--teal-dark);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-button,
+    .menu-button {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--white);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .icon-button:hover,
+    .menu-button:hover {
+      transform: translateY(-1px);
+      border-color: #c7b5ee;
+      background: #f7f1ff;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .menu-button {
+      display: none;
+    }
+
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      color: var(--white);
+      background: linear-gradient(135deg, #7c3aed, #d946ef);
+      box-shadow: 0 14px 26px rgba(124, 58, 237, 0.25);
+    }
+
+    .button.primary:hover {
+      background: linear-gradient(135deg, #6d28d9, #c026d3);
+      box-shadow: 0 14px 30px rgba(192, 38, 211, 0.22);
+    }
+
+    .button.secondary {
+      color: var(--ink);
+      background: var(--white);
+      border-color: var(--line);
+    }
+
+    .button.secondary:hover {
+      background: #f7f1ff;
+      border-color: #c7b5ee;
+    }
+
+    .hero {
+      min-height: calc(100svh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 58px 0 44px;
+      background:
+        linear-gradient(120deg, rgba(124, 58, 237, 0.2), transparent 44%),
+        linear-gradient(300deg, rgba(217, 70, 239, 0.18), transparent 40%),
+        linear-gradient(180deg, #f6f0ff 0%, #fbf8ff 100%);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--teal);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 20px;
+      font-size: clamp(2.75rem, 6vw, 5.8rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin-bottom: 28px;
+      color: #5f5274;
+      font-size: clamp(1.02rem, 2vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 34px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 640px;
+    }
+
+    .stat {
+      padding: 16px;
+      border: 1px solid rgba(199, 181, 238, 0.62);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.56);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.3rem;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .showcase {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone-cluster {
+      position: relative;
+      width: min(100%, 455px);
+      height: 540px;
+    }
+
+    .phone {
+      position: absolute;
+      border: 10px solid #211436;
+      border-radius: 36px;
+      background: #211436;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      width: 78px;
+      height: 19px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #160b28;
+      z-index: 2;
+    }
+
+    .phone-main {
+      width: 238px;
+      height: 486px;
+      right: 70px;
+      top: 18px;
+      transform: rotate(5deg);
+    }
+
+    .phone-side {
+      width: 202px;
+      height: 420px;
+      left: 24px;
+      bottom: 22px;
+      transform: rotate(-9deg);
+      opacity: 0.98;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      padding: 48px 20px 22px;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 72% 22%, rgba(216, 180, 254, 0.95), transparent 22%),
+        linear-gradient(155deg, #7c3aed 0%, #211436 52%, #d946ef 125%);
+    }
+
+    .phone-side .screen {
+      background:
+        radial-gradient(circle at 24% 20%, rgba(192, 132, 252, 0.9), transparent 25%),
+        linear-gradient(145deg, #4c1d95 0%, #211436 48%, #a855f7 130%);
+    }
+
+    .screen-card {
+      margin-top: 74px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .screen-card small {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .screen-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.7rem;
+      line-height: 1;
+    }
+
+    .deal-strip {
+      position: absolute;
+      right: 0;
+      bottom: 76px;
+      width: min(240px, 60%);
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 18px 38px rgba(88, 28, 135, 0.16);
+    }
+
+    .deal-strip span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .deal-strip strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 1.05rem;
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 30px;
+    }
+
+    .section-head h2 {
+      max-width: 650px;
+      margin-bottom: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      max-width: 430px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .brand-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .brand-pill {
+      min-height: 74px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #4c3b63;
+      background: var(--white);
+      font-weight: 850;
+    }
+
+    .products {
+      background: var(--white);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      display: grid;
+      min-height: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(88, 28, 135, 0.08);
+    }
+
+    .product-art {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #f4ecff, #fff7ff);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-art::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(124, 58, 237, 0.18);
+      border-radius: 8px;
+    }
+
+    .device {
+      position: relative;
+      width: 122px;
+      height: 224px;
+      border: 8px solid #211436;
+      border-radius: 28px;
+      background: linear-gradient(150deg, var(--tone-one), var(--tone-two));
+      box-shadow: 0 18px 35px rgba(88, 28, 135, 0.24);
+    }
+
+    .device::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 42px;
+      height: 12px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #160b28;
+    }
+
+    .device::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      bottom: 20px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: -42px -52px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--amber);
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .product-body {
+      padding: 22px;
+    }
+
+    .product-title {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .product-title h3 {
+      margin-bottom: 4px;
+      font-size: 1.15rem;
+    }
+
+    .product-title span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .price {
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 20px;
+      padding: 0;
+      list-style: none;
+      color: #5f5274;
+      font-size: 0.9rem;
+    }
+
+    .specs li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .services {
+      background: #fbf8ff;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .service {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .service-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      color: var(--teal-dark);
+      border-radius: 8px;
+      background: #efe2ff;
+    }
+
+    .service h3 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .service p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .trade {
+      color: var(--white);
+      background:
+        linear-gradient(110deg, rgba(33, 20, 54, 0.98), rgba(109, 40, 217, 0.92)),
+        #211436;
+    }
+
+    .trade-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .trade h2 {
+      margin-bottom: 18px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.04;
+    }
+
+    .trade p {
+      max-width: 560px;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--ink);
+      background: #e9d5ff;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .step p {
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.93rem;
+    }
+
+    .accessory-grid {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(2, 0.9fr);
+      gap: 16px;
+    }
+
+    .accessory {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .accessory.featured {
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(33, 20, 54, 0.96), rgba(217, 70, 239, 0.78)),
+        #211436;
+    }
+
+    .accessory h3 {
+      max-width: 320px;
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+    }
+
+    .accessory p {
+      max-width: 320px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .accessory.featured p {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .accessory-visual {
+      align-self: end;
+      width: 128px;
+      height: 108px;
+      display: grid;
+      place-items: center;
+      color: currentColor;
+      opacity: 0.9;
+    }
+
+    .visit {
+      background: var(--white);
+    }
+
+    .visit-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .store-panel,
+    .form-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbf8ff;
+    }
+
+    .store-panel {
+      padding: 28px;
+      display: grid;
+      align-content: space-between;
+      gap: 30px;
+    }
+
+    .store-panel h2 {
+      margin-bottom: 14px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.04;
+    }
+
+    .store-meta {
+      display: grid;
+      gap: 12px;
+      color: #5f5274;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .map {
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(124, 58, 237, 0.12) 1px, transparent 1px),
+        linear-gradient(rgba(124, 58, 237, 0.12) 1px, transparent 1px),
+        #f2eaff;
+      background-size: 34px 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .route {
+      position: absolute;
+      inset: 38px 24px 48px 40px;
+      border-top: 7px solid var(--teal);
+      border-right: 7px solid var(--teal);
+      border-radius: 0 18px 0 0;
+    }
+
+    .pin {
+      position: absolute;
+      right: 56px;
+      bottom: 50px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50% 50% 50% 0;
+      color: var(--white);
+      background: var(--coral);
+      transform: rotate(-45deg);
+      box-shadow: 0 8px 18px rgba(217, 70, 239, 0.25);
+    }
+
+    .pin svg {
+      transform: rotate(45deg);
+    }
+
+    .form-panel {
+      padding: 28px;
+      background: var(--white);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: #4c3b63;
+      font-size: 0.86rem;
+      font-weight: 750;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fbf8ff;
+      outline: none;
+    }
+
+    input,
+    select {
+      min-height: 48px;
+      padding: 0 13px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      padding: 12px 13px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16);
+    }
+
+    .form-panel .button {
+      margin-top: 18px;
+      width: 100%;
+    }
+
+    .site-footer {
+      padding: 28px 0;
+      color: #cbd5e1;
+      background: #211436;
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 0.92rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    /* ---------- Animations ---------- */
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes floatPhoneMain {
+      0%, 100% { transform: rotate(5deg) translateY(0); }
+      50% { transform: rotate(5deg) translateY(-14px); }
+    }
+
+    @keyframes floatPhoneSide {
+      0%, 100% { transform: rotate(-9deg) translateY(0); }
+      50% { transform: rotate(-9deg) translateY(-10px); }
+    }
+
+    @keyframes dealPulse {
+      0%, 100% { box-shadow: 0 18px 38px rgba(88, 28, 135, 0.16); }
+      50% { box-shadow: 0 22px 46px rgba(139, 92, 246, 0.3); }
+    }
+
+    @keyframes pinBounce {
+      0%, 100% { transform: rotate(-45deg) translateY(0); }
+      50% { transform: rotate(-45deg) translateY(-6px); }
+    }
+
+    .site-header {
+      transition: box-shadow 300ms ease;
+    }
+
+    .site-header.scrolled {
+      box-shadow: 0 8px 24px rgba(88, 28, 135, 0.12);
+    }
+
+    .button,
+    .icon-button,
+    .menu-button {
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .button:active,
+    .icon-button:active,
+    .menu-button:active {
+      transform: scale(0.96);
+    }
+
+    /* Hero entrance */
+    .hero-grid > div:first-child > .eyebrow,
+    .hero-grid > div:first-child > h1,
+    .hero-grid > div:first-child > .hero-copy,
+    .hero-grid > div:first-child > .hero-actions,
+    .hero-grid > div:first-child > .hero-stats {
+      opacity: 0;
+      animation: fadeInUp 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-grid > div:first-child > .eyebrow { animation-delay: 60ms; }
+    .hero-grid > div:first-child > h1 { animation-delay: 140ms; }
+    .hero-grid > div:first-child > .hero-copy { animation-delay: 260ms; }
+    .hero-grid > div:first-child > .hero-actions { animation-delay: 380ms; }
+    .hero-grid > div:first-child > .hero-stats { animation-delay: 480ms; }
+
+    .showcase {
+      opacity: 0;
+      animation: fadeIn 900ms ease forwards;
+      animation-delay: 260ms;
+    }
+
+    .phone-main {
+      animation: floatPhoneMain 6s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+
+    .phone-side {
+      animation: floatPhoneSide 7s ease-in-out infinite;
+      animation-delay: 1.2s;
+    }
+
+    .deal-strip {
+      opacity: 0;
+      animation: fadeInUp 700ms cubic-bezier(0.22, 1, 0.36, 1) 700ms forwards,
+        dealPulse 4s ease-in-out 2.2s infinite;
+    }
+
+    .pin {
+      animation: pinBounce 2.4s ease-in-out infinite;
+    }
+
+    /* Scroll-reveal utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-grid .reveal:nth-child(1) { transition-delay: 0ms; }
+    .product-grid .reveal:nth-child(2) { transition-delay: 120ms; }
+    .product-grid .reveal:nth-child(3) { transition-delay: 240ms; }
+
+    .service-grid .reveal:nth-child(1) { transition-delay: 0ms; }
+    .service-grid .reveal:nth-child(2) { transition-delay: 90ms; }
+    .service-grid .reveal:nth-child(3) { transition-delay: 180ms; }
+    .service-grid .reveal:nth-child(4) { transition-delay: 270ms; }
+
+    .accessory-grid .reveal:nth-child(1) { transition-delay: 0ms; }
+    .accessory-grid .reveal:nth-child(2) { transition-delay: 120ms; }
+    .accessory-grid .reveal:nth-child(3) { transition-delay: 240ms; }
+
+    .steps .reveal:nth-child(1) { transition-delay: 0ms; }
+    .steps .reveal:nth-child(2) { transition-delay: 120ms; }
+    .steps .reveal:nth-child(3) { transition-delay: 240ms; }
+
+    .brand-row .reveal:nth-child(1) { transition-delay: 0ms; }
+    .brand-row .reveal:nth-child(2) { transition-delay: 60ms; }
+    .brand-row .reveal:nth-child(3) { transition-delay: 120ms; }
+    .brand-row .reveal:nth-child(4) { transition-delay: 180ms; }
+    .brand-row .reveal:nth-child(5) { transition-delay: 240ms; }
+
+    /* Hover motion */
+    .product-card {
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(88, 28, 135, 0.16);
+    }
+
+    .device {
+      transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .product-card:hover .device {
+      transform: scale(1.04) rotate(-1deg);
+    }
+
+    .service {
+      transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+    }
+
+    .service:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(88, 28, 135, 0.12);
+      border-color: #c7b5ee;
+    }
+
+    .service-icon {
+      transition: transform 300ms ease;
+    }
+
+    .service:hover .service-icon {
+      transform: scale(1.08);
+    }
+
+    .accessory {
+      transition: transform 300ms ease, box-shadow 300ms ease;
+    }
+
+    .accessory:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 36px rgba(88, 28, 135, 0.14);
+    }
+
+    .accessory-visual {
+      transition: transform 350ms ease;
+    }
+
+    .accessory:hover .accessory-visual {
+      transform: scale(1.06);
+    }
+
+    .step {
+      transition: transform 250ms ease, background 250ms ease;
+    }
+
+    .step:hover {
+      transform: translateX(4px);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .brand-pill {
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .brand-pill:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(88, 28, 135, 0.1);
+      border-color: #c7b5ee;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        min-height: 66px;
+      }
+
+      .menu-button {
+        display: grid;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 66px;
+        left: 16px;
+        right: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 220ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), visibility 220ms;
+      }
+
+      .nav-links a {
+        padding: 13px 12px;
+        border-radius: 8px;
+        transition: background 160ms ease, padding-left 160ms ease;
+      }
+
+      .nav-links a:hover {
+        background: #fbf8ff;
+        padding-left: 16px;
+      }
+
+      .menu-toggle:checked ~ .nav-links {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 44px;
+      }
+
+      .hero-grid,
+      .trade-layout,
+      .visit-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .showcase {
+        min-height: 500px;
+      }
+
+      .product-grid,
+      .service-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .accessory-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-actions .button {
+        display: none;
+      }
+
+      .hero-grid,
+      .section-inner,
+      .nav,
+      .footer-inner {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .hero-stats,
+      .product-grid,
+      .service-grid,
+      .brand-row,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: grid;
+      }
+
+      .showcase {
+        min-height: 420px;
+      }
+
+      .phone-cluster {
+        width: 330px;
+        height: 420px;
+      }
+
+      .phone-main {
+        width: 184px;
+        height: 380px;
+        right: 34px;
+      }
+
+      .phone-side {
+        width: 154px;
+        height: 318px;
+        left: 8px;
+      }
+
+      .deal-strip {
+        right: 10px;
+        bottom: 42px;
+        width: 210px;
+      }
+
+      section {
+        padding: 56px 0;
+      }
+
+      .product-art {
+        min-height: 230px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .hero-actions {
+        display: grid;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.55rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Lucas Mobile home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect x="7" y="2.5" width="10" height="19" rx="2.5" stroke="currentColor" stroke-width="2"></rect>
+            <path d="M10.5 18h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </span>
+        Lucas Mobile
+      </a>
+
+      <input class="menu-toggle" type="checkbox" id="menu-toggle" aria-label="Toggle navigation">
+
+      <div class="nav-links">
+        <a href="#phones">Phones</a>
+        <a href="#services">Services</a>
+        <a href="#trade">Trade-in</a>
+        <a href="#accessories">Accessories</a>
+        <a href="#visit">Visit</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="icon-button" href="#phones" aria-label="Search phones">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle>
+            <path d="m20 20-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </a>
+        <a class="button primary" href="#visit">Reserve</a>
+        <label class="menu-button" for="menu-toggle" aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Flagship deals now live</p>
+          <h1 id="hero-title">Your next phone, matched to the way you live.</h1>
+          <p class="hero-copy">Shop unlocked smartphones, flexible payment plans, expert setup, and same-day pickup from a local mobile team that knows the details.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#phones">
+              Shop phones
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+            <a class="button secondary" href="#trade">Get trade-in value</a>
+          </div>
+          <div class="hero-stats" aria-label="Store highlights">
+            <div class="stat">
+              <strong>60+</strong>
+              <span>phones in stock</span>
+            </div>
+            <div class="stat">
+              <strong>0%</strong>
+              <span>installment plans</span>
+            </div>
+            <div class="stat">
+              <strong>30 min</strong>
+              <span>average setup</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase" aria-label="Featured smartphone visuals">
+          <div class="phone-cluster">
+            <div class="phone phone-side" aria-hidden="true">
+              <div class="screen">
+                <div class="screen-card">
+                  <small>Battery</small>
+                  <strong>2 days</strong>
+                </div>
+              </div>
+            </div>
+            <div class="phone phone-main" aria-hidden="true">
+              <div class="screen">
+                <div class="screen-card">
+                  <small>Apex Pick</small>
+                  <strong>Pro 15</strong>
+                </div>
+              </div>
+            </div>
+            <div class="deal-strip">
+              <span>Today only</span>
+              <strong>Free case and glass with select 5G phones</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Brands">
+      <div class="section-inner">
+        <div class="brand-row">
+          <div class="brand-pill reveal">Apple</div>
+          <div class="brand-pill reveal">Samsung</div>
+          <div class="brand-pill reveal">Google</div>
+          <div class="brand-pill reveal">OnePlus</div>
+          <div class="brand-pill reveal">Xiaomi</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="products" id="phones" aria-labelledby="phones-title">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <h2 id="phones-title">Popular phones ready for pickup.</h2>
+          <p>Compare cameras, storage, battery life, and monthly prices without waiting for a sales pitch.</p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card reveal">
+            <div class="product-art">
+              <span class="badge">Best seller</span>
+              <div class="device" style="--tone-one:#22304f;--tone-two:#10b8a6" aria-hidden="true"></div>
+            </div>
+            <div class="product-body">
+              <div class="product-title">
+                <div>
+                  <h3>iPhone 15 Pro</h3>
+                  <span>256GB, unlocked</span>
+                </div>
+                <div class="price">$999</div>
+              </div>
+              <ul class="specs">
+                <li><span class="dot"></span>A17 Pro</li>
+                <li><span class="dot"></span>48MP camera</li>
+                <li><span class="dot"></span>USB-C</li>
+                <li><span class="dot"></span>5G ready</li>
+              </ul>
+              <a class="button secondary" href="#visit">Reserve phone</a>
+            </div>
+          </article>
+
+          <article class="product-card reveal">
+            <div class="product-art">
+              <span class="badge" style="background:#bdebdc">New arrival</span>
+              <div class="device" style="--tone-one:#111827;--tone-two:#ff6b5f" aria-hidden="true"></div>
+            </div>
+            <div class="product-body">
+              <div class="product-title">
+                <div>
+                  <h3>Galaxy S24 Ultra</h3>
+                  <span>512GB, unlocked</span>
+                </div>
+                <div class="price">$1,199</div>
+              </div>
+              <ul class="specs">
+                <li><span class="dot"></span>S Pen</li>
+                <li><span class="dot"></span>200MP lens</li>
+                <li><span class="dot"></span>AI tools</li>
+                <li><span class="dot"></span>Armor body</li>
+              </ul>
+              <a class="button secondary" href="#visit">Reserve phone</a>
+            </div>
+          </article>
+
+          <article class="product-card reveal">
+            <div class="product-art">
+              <span class="badge" style="background:#dce6f2">Great value</span>
+              <div class="device" style="--tone-one:#334155;--tone-two:#39a96b" aria-hidden="true"></div>
+            </div>
+            <div class="product-body">
+              <div class="product-title">
+                <div>
+                  <h3>Pixel 8 Pro</h3>
+                  <span>128GB, unlocked</span>
+                </div>
+                <div class="price">$799</div>
+              </div>
+              <ul class="specs">
+                <li><span class="dot"></span>Tensor G3</li>
+                <li><span class="dot"></span>Night Sight</li>
+                <li><span class="dot"></span>7 years OS</li>
+                <li><span class="dot"></span>Fast charge</li>
+              </ul>
+              <a class="button secondary" href="#visit">Reserve phone</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services" aria-labelledby="services-title">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <h2 id="services-title">Everything handled before you leave.</h2>
+          <p>From transferring photos to fitting screen protection, the counter is built for clean handoffs.</p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7 7h10M7 12h10M7 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <h3>Data transfer</h3>
+            <p>Contacts, photos, chats, and apps moved carefully to your new device.</p>
+          </article>
+
+          <article class="service reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3 4 6v6c0 5 3.4 7.8 8 9 4.6-1.2 8-4 8-9V6l-8-3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3>Protection plans</h3>
+            <p>Accidental damage cover, battery care, and extended warranty options.</p>
+          </article>
+
+          <article class="service reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M4 16h16M7 8h10M8 20h8M6 16l2-8h8l2 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3>Repairs</h3>
+            <p>Screen, battery, charging port, and camera repairs with clear pricing.</p>
+          </article>
+
+          <article class="service reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M8 7h8M8 12h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="2"></rect>
+              </svg>
+            </div>
+            <h3>Plan advice</h3>
+            <p>Match your phone with prepaid, family, or business plans that fit usage.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="trade" id="trade" aria-labelledby="trade-title">
+      <div class="section-inner trade-layout">
+        <div>
+          <p class="eyebrow">Trade in and upgrade</p>
+          <h2 id="trade-title">Turn your old phone into instant store credit.</h2>
+          <p>Bring your device in any condition. We check the model, storage, screen, and battery health, then apply the value to a new phone or accessory bundle.</p>
+          <a class="button primary" href="#visit" style="background:#ffffff;color:#111827">Start trade-in</a>
+        </div>
+        <div class="steps">
+          <article class="step reveal">
+            <div class="step-number">1</div>
+            <div>
+              <h3>Quick inspection</h3>
+              <p>Most phones can be valued at the counter in under ten minutes.</p>
+            </div>
+          </article>
+          <article class="step reveal">
+            <div class="step-number">2</div>
+            <div>
+              <h3>Transparent offer</h3>
+              <p>See cash value, upgrade credit, and plan discounts side by side.</p>
+            </div>
+          </article>
+          <article class="step reveal">
+            <div class="step-number">3</div>
+            <div>
+              <h3>Private reset</h3>
+              <p>We help you back up, erase, and prepare your old device securely.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="accessories" aria-labelledby="accessories-title">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <h2 id="accessories-title">Finish the setup with gear that lasts.</h2>
+          <p>Cases, glass, chargers, earbuds, and cables selected for daily use.</p>
+        </div>
+
+        <div class="accessory-grid">
+          <article class="accessory featured reveal">
+            <div>
+              <h3>Protection bundle</h3>
+              <p>Impact case, tempered glass, and camera lens shield fitted in store.</p>
+            </div>
+            <div class="accessory-visual" aria-hidden="true">
+              <svg viewBox="0 0 120 100" fill="none">
+                <rect x="26" y="5" width="50" height="90" rx="13" stroke="currentColor" stroke-width="8"></rect>
+                <path d="M86 22h18v55H86z" stroke="currentColor" stroke-width="8" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </article>
+
+          <article class="accessory reveal">
+            <div>
+              <h3>Fast charging</h3>
+              <p>USB-C wall adapters and braided cables up to 100W.</p>
+            </div>
+            <div class="accessory-visual" aria-hidden="true" style="color:#087d73">
+              <svg viewBox="0 0 120 100" fill="none">
+                <path d="M64 6 28 55h28l-6 39 42-55H64l0-33Z" fill="currentColor"></path>
+              </svg>
+            </div>
+          </article>
+
+          <article class="accessory reveal">
+            <div>
+              <h3>Audio kits</h3>
+              <p>Wireless earbuds, car mounts, and travel chargers in stock.</p>
+            </div>
+            <div class="accessory-visual" aria-hidden="true" style="color:#ff6b5f">
+              <svg viewBox="0 0 120 100" fill="none">
+                <path d="M36 30c0-13 10-23 24-23s24 10 24 23v18" stroke="currentColor" stroke-width="8" stroke-linecap="round"></path>
+                <rect x="22" y="42" width="22" height="38" rx="10" fill="currentColor"></rect>
+                <rect x="76" y="42" width="22" height="38" rx="10" fill="currentColor"></rect>
+              </svg>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="visit-title">
+      <div class="section-inner visit-layout">
+        <div class="store-panel reveal">
+          <div>
+            <p class="eyebrow">Visit the shop</p>
+            <h2 id="visit-title">Reserve a phone or ask the counter.</h2>
+            <div class="store-meta">
+              <div class="meta-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11Z" stroke="currentColor" stroke-width="2"></path>
+                  <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"></circle>
+                </svg>
+                18 Market Street, Downtown
+              </div>
+              <div class="meta-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="2"></path>
+                  <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                </svg>
+                hello@apexmobile.example
+              </div>
+              <div class="meta-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 5.2 13 19.8 19.8 0 0 1 2.1 4.4 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.7.6 2.5a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6.5 6.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.5.6a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                </svg>
+                (555) 014-2200
+              </div>
+            </div>
+          </div>
+          <div class="map" aria-label="Map preview">
+            <div class="route"></div>
+            <div class="pin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <form class="form-panel reveal">
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="Your name">
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" type="tel" placeholder="Your number">
+            </div>
+            <div class="field">
+              <label for="interest">Interested in</label>
+              <select id="interest">
+                <option>New smartphone</option>
+                <option>Trade-in value</option>
+                <option>Repair service</option>
+                <option>Accessories</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="budget">Budget</label>
+              <select id="budget">
+                <option>Under $500</option>
+                <option>$500 - $900</option>
+                <option>$900 - $1,300</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell us what you want reserved or compared."></textarea>
+            </div>
+          </div>
+          <button class="button primary" type="submit">Send request</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© 2026 Lucas Mobile. Built for fast phone shopping.</div>
+      <div class="footer-links">
+        <a href="#phones">Phones</a>
+        <a href="#services">Services</a>
+        <a href="#visit">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var header = document.querySelector('.site-header');
+
+      function onScroll() {
+        if (window.scrollY > 8) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      var revealEls = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealEls.forEach(function (el) {
+          observer.observe(el);
+        });
+      } else {
+        revealEls.forEach(function (el) {
+          el.classList.add('is-visible');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
