@@ -866,6 +866,12 @@
       width: 100%;
     }
 
+    .form-status {
+      margin-top: 12px;
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
     .site-footer {
       padding: 28px 0;
       color: #cbd5e1;
@@ -1635,19 +1641,20 @@
           </div>
         </div>
 
-        <form class="form-panel reveal">
+        <form class="form-panel reveal" id="reservation-form">
           <div class="form-grid">
             <div class="field">
               <label for="name">Name</label>
-              <input id="name" type="text" placeholder="Your name">
+              <input id="name" name="name" type="text" placeholder="Your name" required>
             </div>
             <div class="field">
               <label for="phone">Phone</label>
-              <input id="phone" type="tel" placeholder="Your number">
+              <input id="phone" name="phone" type="tel" placeholder="Your number" required>
             </div>
             <div class="field">
               <label for="interest">Interested in</label>
-              <select id="interest">
+              <select id="interest" name="interest" required>
+                <option value="">Select an option</option>
                 <option>New smartphone</option>
                 <option>Trade-in value</option>
                 <option>Repair service</option>
@@ -1656,7 +1663,8 @@
             </div>
             <div class="field">
               <label for="budget">Budget</label>
-              <select id="budget">
+              <select id="budget" name="budget" required>
+                <option value="">Select a budget</option>
                 <option>Under $500</option>
                 <option>$500 - $900</option>
                 <option>$900 - $1,300</option>
@@ -1665,7 +1673,7 @@
             </div>
             <div class="field full">
               <label for="message">Message</label>
-              <textarea id="message" placeholder="Tell us what you want reserved or compared."></textarea>
+              <textarea id="message" name="message" placeholder="Tell us what you want reserved or compared." required></textarea>
             </div>
           </div>
           <button class="button primary" type="submit">Send request</button>
@@ -1685,6 +1693,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
   <script>
     (function () {
       var header = document.querySelector('.site-header');
@@ -1717,6 +1727,60 @@
       } else {
         revealEls.forEach(function (el) {
           el.classList.add('is-visible');
+        });
+      }
+
+      var form = document.getElementById('reservation-form');
+      if (form) {
+        var button = form.querySelector('button[type="submit"]');
+        var status = document.createElement('p');
+        status.className = 'form-status';
+        status.setAttribute('aria-live', 'polite');
+        form.appendChild(status);
+
+        form.addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          var isPlaceholderConfig = !window.SUPABASE_URL || !window.SUPABASE_ANON_KEY || window.SUPABASE_URL.includes('YOUR_PROJECT_REF') || window.SUPABASE_ANON_KEY.includes('YOUR_SUPABASE_ANON_KEY');
+
+          if (isPlaceholderConfig) {
+            status.textContent = 'Supabase is not configured yet. Update supabase-config.js with your project URL and anon key.';
+            status.style.color = '#b91c1c';
+            return;
+          }
+
+          var payload = {
+            name: form.elements.name.value.trim(),
+            phone: form.elements.phone.value.trim(),
+            interest: form.elements.interest.value,
+            budget: form.elements.budget.value,
+            message: form.elements.message.value.trim()
+          };
+
+          button.disabled = true;
+          button.textContent = 'Saving...';
+          status.textContent = '';
+          status.style.color = '';
+
+          try {
+            var supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+            var { error } = await supabase.from('reservations').insert([payload]);
+
+            if (error) {
+              throw error;
+            }
+
+            form.reset();
+            status.textContent = 'Request saved successfully. We will contact you soon.';
+            status.style.color = '#0f766e';
+          } catch (error) {
+            console.error(error);
+            status.textContent = 'We could not save your request right now. Please contact us directly.';
+            status.style.color = '#b91c1c';
+          } finally {
+            button.disabled = false;
+            button.textContent = 'Send request';
+          }
         });
       }
     })();
