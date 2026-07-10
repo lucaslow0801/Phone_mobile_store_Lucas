@@ -1645,38 +1645,43 @@
           <div class="form-grid">
             <div class="field">
               <label for="name">Name</label>
-              <input id="name" name="name" type="text" placeholder="Your name" required>
+              <input id="name" name="name" type="text" placeholder="Enter your full name" required>
             </div>
             <div class="field">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" placeholder="Your number" required>
+              <label for="contact_number">Contact Number</label>
+              <input id="contact_number" name="contact_number" type="tel" placeholder="Enter your contact number" required>
             </div>
             <div class="field">
-              <label for="interest">Interested in</label>
-              <select id="interest" name="interest" required>
-                <option value="">Select an option</option>
-                <option>New smartphone</option>
-                <option>Trade-in value</option>
-                <option>Repair service</option>
-                <option>Accessories</option>
+              <label for="brand">Brand</label>
+              <select id="brand" name="brand" required>
+                <option value="">Select a brand</option>
+                <option>Apple</option>
+                <option>Samsung</option>
+                <option>Xiaomi</option>
+                <option>OPPO</option>
+                <option>vivo</option>
+                <option>Huawei</option>
+                <option>HONOR</option>
+                <option>realme</option>
+                <option>Google Pixel</option>
+                <option>Nothing</option>
+                <option>OnePlus</option>
+                <option>ASUS</option>
+                <option>Sony</option>
+                <option>Motorola</option>
+                <option>Other</option>
               </select>
             </div>
             <div class="field">
-              <label for="budget">Budget</label>
-              <select id="budget" name="budget" required>
-                <option value="">Select a budget</option>
-                <option>Under $500</option>
-                <option>$500 - $900</option>
-                <option>$900 - $1,300</option>
-                <option>Flexible</option>
-              </select>
+              <label for="model">Model</label>
+              <input id="model" name="model" type="text" placeholder="Example: iPhone 15 Pro Max" required>
             </div>
             <div class="field full">
               <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="Tell us what you want reserved or compared." required></textarea>
+              <textarea id="message" name="message" placeholder="Tell us about your phone, including its condition, any issues, accessories included, or any additional information." required></textarea>
             </div>
           </div>
-          <button class="button primary" type="submit">Send request</button>
+          <button class="button primary" type="submit">Request a Quote</button>
         </form>
       </div>
     </section>
@@ -1751,14 +1756,14 @@
 
           var payload = {
             name: form.elements.name.value.trim(),
-            phone: form.elements.phone.value.trim(),
-            interest: form.elements.interest.value,
-            budget: form.elements.budget.value,
+            contact_number: form.elements.contact_number.value.trim(),
+            brand: form.elements.brand.value,
+            model: form.elements.model.value.trim(),
             message: form.elements.message.value.trim()
           };
 
           button.disabled = true;
-          button.textContent = 'Saving...';
+          button.textContent = 'Submitting...';
           status.textContent = '';
           status.style.color = '';
 
@@ -1771,7 +1776,7 @@
             }
 
             form.reset();
-            status.textContent = 'Request saved successfully. We will contact you soon.';
+            status.textContent = "Thank you! We've received your request and will contact you with a quotation soon.";
             status.style.color = '#0f766e';
           } catch (error) {
             console.error(error);
@@ -1779,7 +1784,7 @@
             status.style.color = '#b91c1c';
           } finally {
             button.disabled = false;
-            button.textContent = 'Send request';
+            button.textContent = 'Request a Quote';
           }
         });
       }
